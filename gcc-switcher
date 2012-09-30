@@ -1,0 +1,45 @@
+#!/bin/bash
+#COMPILERS
+PORT_ETC="/etc/portage"
+switch(){
+  while read target ver; do
+   if [ "${target}" = "${CATEGORY}/${PN}" ]; then
+    MY_GCC="$(find "/usr/${MACHTYPE}/gcc-bin/" -name "${ver}*")"
+    export ROOTPATH="${MY_GCC}:${ROOTPATH}"
+    export PATH="${MY_GCC}:${PATH}"
+    export LIBRARY_PATH="$(gcc-config -L):${LIBRARY_PATH}"
+   fi
+  done < "${file}"
+}
+target="`ls -d1 ${PORT_ETC}/package.compilers | grep -v "~"`"
+if [[ -f "${target}" ]];then
+  file="${target}"
+  switch;
+elif [[ -d "${target}" ]];then
+  while read subtarget;do
+	file="${subtarget}"
+	switch;
+  done <<< "`find ${PORT_ETC}/package.compilers/ -type f | grep -v "~"`"
+fi
+
+#COMPILERS_FULL
+switch_full(){
+  while read target ver; do
+   if [ "${target}" = "${CATEGORY}/${PN}" ]; then
+    MY_GCC="$(find "/usr/${MACHTYPE}/gcc-bin/" -name "${ver}*")"
+    export ROOTPATH="${MY_GCC}:${ROOTPATH}"
+    export PATH="${MY_GCC}:${PATH}"
+    export LIBRARY_PATH="${MY_GCC}:${LIBRARY_PATH}"
+   fi
+  done < "${file_full}"
+}
+target_full="`ls -d1 ${PORT_ETC}/package.compilers-full | grep -v "~"`"
+if [[ -f "${target_full}" ]];then
+  file_full="${target_full}"
+  switch_full;
+elif [[ -d "${target_full}" ]];then
+  while read subtarget_full;do
+	file_full="${subtarget_full}"
+	switch_full;
+  done <<< "`find ${PORT_ETC}/package.compilers-full/ -type f | grep -v "~"`"
+fi
