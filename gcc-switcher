@@ -11,7 +11,7 @@ switch(){
    fi
   done < "${file}"
 }
-target="`ls -d1 ${PORT_ETC}/package.compilers | grep -v "~"`"
+target="`ls -d1 ${PORT_ETC}/package.compilers 2>/dev/null | grep -v "~"`"
 if [[ -f "${target}" ]];then
   file="${target}"
   switch;
@@ -33,7 +33,7 @@ switch_full(){
    fi
   done < "${file_full}"
 }
-target_full="`ls -d1 ${PORT_ETC}/package.compilers-full | grep -v "~"`"
+target_full="`ls -d1 ${PORT_ETC}/package.compilers-full 2>/dev/null | grep -v "~"`"
 if [[ -f "${target_full}" ]];then
   file_full="${target_full}"
   switch_full;
