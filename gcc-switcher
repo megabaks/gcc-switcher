@@ -21,7 +21,7 @@ my_gcc(){
 ########## COMPILERS ##########
 switch(){
 	while read target ver; do
-		if [[ "${target}" = "${CATEGORY}/${PN}" ]]; then
+		if [[ "${CATEGORY}/${PN}" == ${target} ]]; then
 			my_gcc "${target}" "${ver}" "${1}"
 			export LIBRARY_PATH="$(gcc-config -L):${LIBRARY_PATH}"
 		fi
@@ -41,7 +41,7 @@ fi
 ########## COMPILERS_FULL #####
 switch_full(){
 	while read target ver; do
-		if [[ "${target}" = "${CATEGORY}/${PN}" ]]; then
+		if [[ "${CATEGORY}/${PN}" == ${target} ]]; then
 			my_gcc "${target}" "${ver}" "${1}"
 			export LIBRARY_PATH="${MY_GCC}:${LIBRARY_PATH}"
 		fi
