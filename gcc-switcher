@@ -1,5 +1,7 @@
 #!/bin/bash
 
+[[ "${EBUILD_PHASE}" != "setup" ]] && return 0
+
 PORT_ETC="/etc/portage"
 
 my_gcc(){
