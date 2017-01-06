@@ -1,6 +1,8 @@
 #!/bin/bash
 
-[[ "${EBUILD_PHASE}" != "setup" ]] && return 0
+# we need support for both pretend and setup phases
+[[ "${EBUILD_PHASE}" != "pretend" && \
+    "${EBUILD_PHASE}" != "setup" ]] && return 0
 
 PORT_ETC="/etc/portage"
 
